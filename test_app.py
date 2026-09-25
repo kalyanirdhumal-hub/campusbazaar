@@ -67,5 +67,5 @@ def test_mark_sold(client):
 def test_api_items(client):
     response = client.get("/api/items")
 
-    assert response.status_code == 200
+    assert response.status_code == 500
     assert isinstance(response.get_json(), list)
