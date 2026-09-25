@@ -1,8 +1,7 @@
 import os
+import subprocess
 
 from flask import Flask, jsonify, redirect, render_template, request
-
-COMMIT = os.environ.get("GIT_SHA", "local")[:7]
 
 app = Flask(__name__)
 
@@ -29,11 +28,27 @@ items = [
     },
 ]
 
-COMMIT = (
-    os.getenv("GIT_SHA")
-    or os.getenv("RENDER_GIT_COMMIT")
-    or "local"
-)[:7]
+def get_commit_sha():
+    # Check environment variables provided by CI/CD or Render
+    for env_var in ["GIT_SHA", "RENDER_GIT_COMMIT", "COMMIT_SHA"]:
+        val = os.getenv(env_var)
+        if val and val != "local":
+            return val[:7]
+    
+    # Fallback to local git command if available
+    try:
+        git_hash = subprocess.check_output(
+            ["git", "rev-parse", "--short", "HEAD"], 
+            stderr=subprocess.DEVNULL
+        ).decode("utf-8").strip()
+        if git_hash:
+            return git_hash[:7]
+    except Exception:
+        pass
+        
+    return "local"
+
+COMMIT = get_commit_sha()
 
 
 @app.route("/")
