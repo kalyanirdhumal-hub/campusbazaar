@@ -85,6 +85,8 @@ def add_item():
 
     if price <= 0:
         return "Price must be greater than zero.", 400
+    if len(name) < 2:
+        return "Item name must contain at least 2 characters.", 400
 
     new_item = {
         "id": max([item["id"] for item in items], default=0) + 1,
