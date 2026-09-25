@@ -62,7 +62,8 @@ def test_mark_sold(client):
 
     assert response.status_code == 302
     assert items[0]["status"] == "Sold"
-    
+
+
 def test_api_items(client):
     response = client.get("/api/items")
 
