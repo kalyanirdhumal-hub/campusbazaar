@@ -263,3 +263,6 @@ footer {
         width: 92%;
     }
 }
+button {
+    cursor: pointer;
+}
