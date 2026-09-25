@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sell Item - CampusBazaar</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body>
+
+<header class="navbar">
+    <div>
+        <h1>🛍️ CampusBazaar</h1>
+        <p>Sell an Item</p>
+    </div>
+
+    <a href="/" class="button">← Marketplace</a>
+</header>
+
+<main>
+
+    <section class="form-container">
+
+        <h2>List Your Item</h2>
+        <p>Add an item that you want to sell to another student.</p>
+
+        <form method="POST" action="/add">
+
+            <label>Item Name</label>
+            <input
+                type="text"
+                name="name"
+                placeholder="e.g. Scientific Calculator"
+                required
+            >
+
+            <label>Category</label>
+            <select name="category" required>
+                <option value="">Select category</option>
+                <option value="Books">Books</option>
+                <option value="Electronics">Electronics</option>
+                <option value="Stationery">Stationery</option>
+                <option value="Accessories">Accessories</option>
+                <option value="Other">Other</option>
+            </select>
+
+            <label>Price (₹)</label>
+            <input
+                type="number"
+                name="price"
+                placeholder="e.g. 500"
+                min="1"
+                required
+            >
+
+            <label>Condition</label>
+            <select name="condition">
+                <option value="Excellent">Excellent</option>
+                <option value="Good">Good</option>
+                <option value="Fair">Fair</option>
+            </select>
+
+            <label>Seller Name</label>
+            <input
+                type="text"
+                name="seller"
+                placeholder="Your name"
+                required
+            >
+
+            <label>Description</label>
+            <textarea
+                name="description"
+                placeholder="Describe your item..."
+                rows="5"
+            ></textarea>
+
+            <button type="submit" class="submit-button">
+                List Item
+            </button>
+
+        </form>
+
+    </section>
+
+</main>
+
+<footer>
+    CampusBazaar • Commit: {{ commit }}
+</footer>
+
+</body>
+</html>

@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CampusBazaar</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body>
+
+<header class="navbar">
+    <div>
+        <h1>🛍️ CampusBazaar</h1>
+        <p>Student Marketplace</p>
+    </div>
+
+    <a href="/add" class="button">+ Sell Item</a>
+</header>
+
+<main>
+
+    <section class="hero">
+        <h2>Buy. Sell. Exchange.</h2>
+        <p>A simple marketplace for students on campus.</p>
+
+        <form method="GET" action="/" class="search-form">
+            <input
+                type="text"
+                name="search"
+                placeholder="Search items, categories..."
+                value="{{ search }}"
+            >
+            <button type="submit">Search</button>
+        </form>
+    </section>
+
+    <section class="stats">
+
+        <div class="stat-card">
+            <h3>{{ total_count }}</h3>
+            <p>Total Items</p>
+        </div>
+
+        <div class="stat-card">
+            <h3>{{ available_count }}</h3>
+            <p>Available</p>
+        </div>
+
+        <div class="stat-card">
+            <h3>{{ total_count - available_count }}</h3>
+            <p>Sold</p>
+        </div>
+
+    </section>
+
+    <section>
+
+        <h2 class="section-title">Marketplace Items</h2>
+
+        {% if items %}
+
+        <div class="item-grid">
+
+            {% for item in items %}
+
+            <div class="item-card">
+
+                <div class="item-top">
+                    <span class="category">
+                        {{ item.category }}
+                    </span>
+
+                    <span class="status {{ item.status|lower }}">
+                        {{ item.status }}
+                    </span>
+                </div>
+
+                <h3>{{ item.name }}</h3>
+
+                <p class="price">₹{{ item.price }}</p>
+
+                <p>
+                    {{ item.description }}
+                </p>
+
+                <div class="item-info">
+                    <span>Condition: {{ item.condition }}</span>
+                    <span>Seller: {{ item.seller }}</span>
+                </div>
+
+                {% if item.status == "Available" %}
+
+                <form method="POST" action="/sell/{{ item.id }}">
+                    <button class="sold-button" type="submit">
+                        Mark as Sold
+                    </button>
+                </form>
+
+                {% else %}
+
+                <button class="sold-button disabled" disabled>
+                    Sold
+                </button>
+
+                {% endif %}
+
+            </div>
+
+            {% endfor %}
+
+        </div>
+
+        {% else %}
+
+        <div class="empty">
+            <h3>No items found</h3>
+            <p>Try a different search.</p>
+        </div>
+
+        {% endif %}
+
+    </section>
+
+</main>
+
+<footer>
+    CampusBazaar • Commit: {{ commit }}
+</footer>
+
+</body>
+</html>
