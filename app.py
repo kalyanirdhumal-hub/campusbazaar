@@ -2,6 +2,8 @@ import os
 
 from flask import Flask, jsonify, redirect, render_template, request
 
+COMMIT = os.environ.get("GIT_SHA", "local")[:7]
+
 app = Flask(__name__)
 
 items = [
